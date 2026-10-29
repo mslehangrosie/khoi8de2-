@@ -1,0 +1,1710 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề Thi Trắc Nghiệm Tiếng Anh - Ms Lê Hằng English</title>
+    <!-- Google Fonts Nunito -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Canvas Confetti Library CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Nunito', 'sans-serif'],
+                    },
+                    colors: {
+                        brandPurple: '#8854C0',
+                        brandYellow: '#FDCB6E',
+                        brandTeal: '#00C9A7',
+                        correctGreen: '#00D26A',
+                        wrongRed: '#FF4757',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Animated Gradient Background */
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(-45deg, #8854C0, #FDCB6E, #00C9A7, #E84393);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* SVG Floaty Background Pattern Overlay */
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.18'%3E%3Cpath d='M0 38.59l2.83-2.83 1.41 1.41L1.41 40l2.83 2.83-1.41 1.41L0 41.41l-2.83 2.83-1.41-1.41L-1.41 40l-2.83-2.83 1.41-1.41L0 38.59zM40 0l2.83 2.83-1.41 1.41L40 2.83l-2.83 2.83-1.41-1.41L38.59 0l-2.83-2.83 1.41-1.41L40-1.41l2.83-2.83 1.41 1.41L41.41 0zM40 77.17l2.83-2.83 1.41 1.41L41.41 77.17l2.83 2.83-1.41 1.41L40 78.59l-2.83 2.83-1.41-1.41L38.59 77.17l-2.83-2.83 1.41-1.41L40 75.76zM77.17 40l2.83-2.83-1.41-1.41L77.17 37.17l2.83-2.83-1.41-1.41L75.76 35.76l-2.83-2.83-1.41 1.41L74.34 37.17l-2.83 2.83 1.41 1.41L75.76 40z'/%3E%3Ccircle cx='20' cy='20' r='5'/%3E%3Cpath d='M60 20l3 6h6l-5 4 2 6-6-4-6 4 2-6-5-4h6z'/%3E%3Cpath d='M20 60c2 0 4 2 4 4s-2 4-4 4-4-2-4-4 2-4 4-4z'/%3E%3C/g%3E%3C/svg%3E");
+            animation: floatPattern 20s linear infinite;
+        }
+
+        @keyframes floatPattern {
+            0% { background-position: 0 0; }
+            100% { background-position: 100px 200px; }
+        }
+
+        /* 3D Card Style */
+        .card-3d {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 6px solid #CBD5E1;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* 3D Gamified Buttons */
+        .btn-option {
+            transition: all 0.15s ease-in-out;
+            box-shadow: 0 5px 0 0 #CBD5E1;
+            border: 2px solid #E2E8F0;
+        }
+
+        .btn-option:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 0 0 #94A3B8;
+            background-color: #F8FAFC;
+        }
+
+        .btn-option:active:not(:disabled) {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0 0 #94A3B8;
+        }
+
+        .btn-option.selected-correct {
+            background-color: #00D26A !important;
+            color: white !important;
+            border-color: #00B058 !important;
+            box-shadow: 0 5px 0 0 #008A45 !important;
+        }
+
+        .btn-option.selected-wrong {
+            background-color: #FF4757 !important;
+            color: white !important;
+            border-color: #E03141 !important;
+            box-shadow: 0 5px 0 0 #B81D2C !important;
+            animation: shake 0.4s ease-in-out;
+        }
+
+        .btn-option.reveal-correct {
+            background-color: #D1FAE5 !important;
+            border-color: #10B981 !important;
+            color: #065F46 !important;
+            font-weight: bold;
+        }
+
+        /* Shake Animation for Wrong Choice */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-8px); }
+            40%, 80% { transform: translateX(8px); }
+        }
+
+        /* Underline styling for phonetic/focus words */
+        u {
+            text-decoration-color: #FF4757;
+            text-decoration-thickness: 3px;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body class="py-6 px-3 sm:px-6 relative z-10 text-slate-800">
+    <!-- SVG Background Overlay -->
+    <div class="bg-pattern"></div>
+
+    <div class="max-w-4xl mx-auto relative z-10">
+
+        <!-- HEADER AREA -->
+        <header class="card-3d rounded-2xl p-4 sm:p-6 mb-6 text-center">
+            <h2 class="text-base sm:text-lg font-bold text-brandPurple tracking-wide uppercase mb-1">
+                Giáo viên tạo: Ms Lê Hằng English
+            </h2>
+            <p class="text-xs sm:text-sm font-semibold text-slate-600 mb-3">
+                Đăng kí học tiếng anh 1-12, IELTS vui lòng liên hệ Ms Lê Hằng, zalo 0584 965 348.
+            </p>
+
+            <!-- IMPORTANT NOTICE BOX -->
+            <div class="bg-amber-50 border-2 border-amber-300 rounded-xl p-3 sm:p-4 text-amber-900 text-xs sm:text-sm text-left shadow-sm">
+                <div class="font-extrabold text-amber-600 text-center text-sm sm:text-base mb-1 flex items-center justify-center gap-1">
+                    <span>⚠️</span> LỜI NHẮC CỰC KỲ QUAN TRỌNG <span>⚠️</span>
+                </div>
+                <p class="mb-1 font-semibold">
+                    Chỉ có đọc kỹ giải thích ngay sau mỗi câu, sau đó ghi lại từ vựng/cấu trúc mới vào vở để học thì mới thực sự giỏi lên.
+                </p>
+                <p class="mb-1 text-red-600 font-bold">
+                    Làm cho xong mà không đọc giải thích hay đọc qua loa không ghi chép thì chỉ tốn thời gian vô ích!
+                </p>
+                <p class="font-black text-center text-brandPurple mt-1 italic">
+                    Kéo tới đâu, làm tới đó! *
+                </p>
+            </div>
+        </header>
+
+        <!-- MAIN QUIZ CONTAINER -->
+        <main id="quiz-container" class="space-y-6">
+            <!-- Questions rendered dynamically via Javascript -->
+        </main>
+
+        <!-- SUBMIT BUTTON AREA -->
+        <div class="mt-8 text-center">
+            <button id="btn-submit" onclick="submitExam()" class="bg-brandPurple hover:bg-purple-700 text-white font-black text-lg sm:text-xl py-4 px-10 rounded-2xl shadow-lg border-b-4 border-purple-900 transition-all hover:scale-105 active:scale-95">
+                🎯 NỘP BÀI & XEM KẾT QUẢ
+            </button>
+        </div>
+
+    </div>
+
+    <!-- SCORE MODAL POPUP -->
+    <div id="score-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 text-center card-3d relative animate-bounce-short">
+            <div id="modal-icon" class="text-6xl mb-2">🎉</div>
+            <h3 class="text-2xl font-black text-slate-800 mb-2">KẾT QUẢ BÀI THI</h3>
+            <div class="text-4xl font-extrabold text-brandPurple mb-3" id="modal-score">0 / 0</div>
+            <p id="modal-feedback" class="text-sm sm:text-base font-bold text-slate-700 bg-purple-50 p-4 rounded-xl border border-purple-200 mb-6">
+                <!-- Feedback message -->
+            </p>
+            <button onclick="closeModal()" class="w-full bg-brandTeal hover:bg-teal-600 text-white font-black py-3 rounded-xl border-b-4 border-teal-800 transition">
+                Đóng & Xem Lại Lời Giải
+            </button>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Web Audio API Sound Effects Synthesizer
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        let audioCtx;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new AudioContext();
+            }
+        }
+
+        function playDingSound() {
+            try {
+                initAudio();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
+                osc.frequency.exponentialRampToValueAtTime(1046.50, audioCtx.currentTime + 0.3); // C6
+                gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.3);
+            } catch (e) { console.log(e); }
+        }
+
+        function playWrongSound() {
+            try {
+                initAudio();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(180, audioCtx.currentTime);
+                osc.frequency.setValueAtTime(140, audioCtx.currentTime + 0.15);
+                gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.4);
+            } catch (e) { console.log(e); }
+        }
+
+        // COMPLETE UNTRUNCATED QUESTION DATA
+        const quizData = [
+            // EXERCISE 6 - PASSAGE A
+            {
+                section: "EXERCISE 6. READING COMPREHENSION",
+                passage: "<strong>PASSAGE A:</strong><br>When Green Valley Secondary School surveyed its students about leisure habits, the teachers discovered a clear problem. Many teenagers said they spent most of their free time online, yet a large number also complained that they felt tired, lonely, or unable to concentrate. The school therefore created a twelve-week programme called “Balanced Leisure”. Students did not have to give up digital entertainment. Instead, they learnt to plan a healthier mixture of physical, creative, and social activities. Every Wednesday, each participant chose one workshop. The options included badminton, cycling, cooking, knitting, doing DIY, and solving puzzles. A quiet reading corner was also available for students who needed time alone. At first, some students joined only because their form teachers encouraged them. Minh, for example, believed that craft activities were old-fashioned. However, after he built a wooden phone stand in the DIY workshop, he became interested in learning practical skills. Lan preferred the puzzle group because the activities improved her memory and gave her a chance to work with classmates she had not known well before. By the final week, students reported that they were using their phones less during meals and before bedtime. The programme did not completely change everyone’s habits, but it helped most participants understand that leisure time should restore their energy rather than leave them more exhausted.",
+                q: "1. The programme required students to stop using digital entertainment completely.",
+                options: ["A. True", "B. False"],
+                correct: "B. False",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch nghĩa toàn câu:</strong> Chương trình yêu cầu học sinh phải ngừng sử dụng giải trí kỹ thuật số hoàn toàn.<br>
+                2. <strong>Phân tích 2 đáp án:</strong><br>
+                   - A. True (Đúng)<br>
+                   - B. False (Sai)<br>
+                3. <strong>Tại sao chọn B?</strong><br>
+                   Trong bài đọc có đoạn: <em>"Students did not have to give up digital entertainment. Instead, they learnt to plan a healthier mixture..."</em> (Học sinh không phải từ bỏ giải trí kỹ thuật số...). Do đó phát biểu cho rằng phải stop completely là SAI.<br>
+                4. <strong>Tại sao loại A?</strong> Mâu thuẫn trực tiếp với thông tin trong bài.`
+            },
+            {
+                q: "2. Minh changed his opinion after completing a practical DIY product.",
+                options: ["A. True", "B. False"],
+                correct: "A. True",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch nghĩa toàn câu:</strong> Minh đã thay đổi ý kiến của mình sau khi hoàn thành một sản phẩm DIY thực tế.<br>
+                2. <strong>Phân tích 2 đáp án:</strong><br>
+                   - A. True (Đúng)<br>
+                   - B. False (Sai)<br>
+                3. <strong>Tại sao chọn A?</strong><br>
+                   Bài đọc nêu: <em>"Minh, for example, believed that craft activities were old-fashioned. However, after he built a wooden phone stand in the DIY workshop, he became interested..."</em> (Ban đầu cho rằng thủ công là cũ kỹ, nhưng sau khi làm kệ điện thoại gỗ, em ấy đã hứng thú hơn).<br>
+                4. <strong>Tại sao loại B?</strong> Vì thông tin trong bài hoàn toàn khớp với câu hỏi.`
+            },
+            {
+                q: "3. Lan joined the puzzle group because she wanted to avoid working with other students.",
+                options: ["A. True", "B. False"],
+                correct: "B. False",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch nghĩa toàn câu:</strong> Lan tham gia nhóm giải đố vì cô ấy muốn tránh làm việc với các học sinh khác.<br>
+                2. <strong>Phân tích 2 đáp án:</strong><br>
+                   - A. True (Đúng)<br>
+                   - B. False (Sai)<br>
+                3. <strong>Tại sao chọn B?</strong><br>
+                   Bài ghi: <em>"...gave her a chance to work with classmates she had not known well before."</em> (Cho cô ấy cơ hội làm việc cùng các bạn cùng lớp mà trước đây chưa quen thân). Cô ấy muốn giao lưu chứ không phải "avoid" (tránh).<br>
+                4. <strong>Tại sao loại A?</strong> Sai ngữ cảnh bài đọc.`
+            },
+            {
+                q: "4. What was the main purpose of the “Balanced Leisure” programme?",
+                options: [
+                    "A. To prepare students for a sports competition.",
+                    "B. To help students develop healthier leisure habits.",
+                    "C. To replace every online activity with reading.",
+                    "D. To teach only traditional crafts."
+                ],
+                correct: "B. To help students develop healthier leisure habits.",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu hỏi:</strong> Mục đích chính của chương trình "Balanced Leisure" (Giải trí cân bằng) là gì?<br>
+                2. <strong>Phân tích 4 đáp án:</strong><br>
+                   - A. Để chuẩn bị cho học sinh thi đấu thể thao.<br>
+                   - B. Để giúp học sinh phát triển thói quen giải trí lành mạnh hơn.<br>
+                   - C. Để thay thế mọi hoạt động trực tuyến bằng việc đọc sách.<br>
+                   - D. Chỉ để dạy các nghề thủ công truyền thống.<br>
+                3. <strong>Tại sao chọn B?</strong><br>
+                   Đoạn 1 nêu rõ chương trình giúp học sinh lên kế hoạch kết hợp lành mạnh các hoạt động thể chất, sáng tạo và xã hội.<br>
+                4. <strong>Tại sao A, C, D sai?</strong> A, C, D đều chỉ đề cập một khía cạnh hẹp hoặc bị bóp méo thông tin.`
+            },
+            {
+                q: "5. Which statement best summarises the result of the programme?",
+                options: [
+                    "A. Every student stopped using a phone.",
+                    "B. The school removed all digital activities.",
+                    "C. Most students became more aware of how leisure affects their well-being.",
+                    "D. Students spent more time studying at night."
+                ],
+                correct: "C. Most students became more aware of how leisure affects their well-being.",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu hỏi:</strong> Câu nào tóm tắt tốt nhất kết quả của chương trình?<br>
+                2. <strong>Phân tích 4 đáp án:</strong><br>
+                   - A. Mọi học sinh đều ngừng dùng điện thoại (Sai - bài ghi dùng bớt điện thoại trước giờ ngủ).<br>
+                   - B. Trường loại bỏ toàn bộ hoạt động kỹ thuật số (Sai).<br>
+                   - C. Hầu hết học sinh nhận thức rõ hơn về việc giải trí ảnh hưởng đến sức khỏe của mình như thế nào (Đúng).<br>
+                   - D. Học sinh dành nhiều thời gian hơn để học bài buổi đêm (Sai).<br>
+                3. <strong>Tại sao chọn C?</strong> Nằm ở câu cuối bài đọc: <em>"...helped most participants understand that leisure time should restore their energy..."</em>`
+            },
+
+            // PASSAGE B
+            {
+                passage: "<strong>PASSAGE B:</strong><br>Last September, a group of students from Hoa Binh School spent three days in a village in Thai Binh Province. Their aim was not simply to take photographs; they wanted to understand how farming families lived during harvest time. The students stayed in small cottages near a wide paddy field and followed a carefully planned schedule. On the first morning, they watched a combine harvester cut rice quickly across the field. Although the machine completed much of the heavy work, the farmers still had to check the grain, load the bags, and move them to a dry yard before the afternoon rain arrived. The students were surprised by how efficiently the villagers worked together. No one waited to be told what to do because each person already understood his or her responsibility. The following day, the students helped feed poultry, collect eggs, and spread rice in thin layers to dry. Their guide reminded them to walk carefully near the machines and to stay with the group. In the evening, local children taught them two traditional games. The visitors initially expected the village to be quiet and rather boring, but they soon discovered that community life was active and sociable. When the trip ended, the students agreed that the most memorable feature was not the machinery or the scenery. It was the villagers’ hospitality and the strong cooperation among family members and neighbours.",
+                q: "6. Why did the students visit the village?",
+                options: [
+                    "A. To compete with local farmers.",
+                    "B. To learn about life during harvest time.",
+                    "C. To sell farming machines.",
+                    "D. To spend all day taking photographs."
+                ],
+                correct: "B. To learn about life during harvest time.",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu hỏi:</strong> Tại sao các học sinh lại đến thăm làng?<br>
+                2. <strong>Phân tích 4 đáp án:</strong><br>
+                   - A. Để thi đấu với nông dân địa phương.<br>
+                   - B. Để tìm hiểu về cuộc sống trong mùa thu hoạch.<br>
+                   - C. Để bán máy nông nghiệp.<br>
+                   - D. Để dành cả ngày chụp ảnh.<br>
+                3. <strong>Tại sao chọn B?</strong> Trong bài ghi: <em>"...they wanted to understand how farming families lived during harvest time."</em><br>
+                4. <strong>Tại sao A, C, D sai?</strong> A và C không có trong bài, D bị phủ định bởi <em>"Their aim was not simply to take photographs"</em>.`
+            },
+            {
+                q: "7. What did the passage say about the combine harvester?",
+                options: [
+                    "A. It removed the need for any human work.",
+                    "B. It was used only after the rain.",
+                    "C. It did much of the heavy work, but farmers still had important tasks.",
+                    "D. Students operated it without help."
+                ],
+                correct: "C. It did much of the heavy work, but farmers still had important tasks.",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu hỏi:</strong> Đoạn văn nói gì về máy gặt đập liên hợp?<br>
+                2. <strong>Phân tích 4 đáp án:</strong><br>
+                   - A. Nó loại bỏ hoàn toàn lao động con người.<br>
+                   - B. Nó chỉ được dùng sau khi mưa.<br>
+                   - C. Nó làm hầu hết công việc nặng nhọc, nhưng nông dân vẫn có các nhiệm vụ quan trọng.<br>
+                   - D. Học sinh tự vận hành mà không cần trợ giúp.<br>
+                3. <strong>Tại sao chọn C?</strong> Khớp câu: <em>"Although the machine completed much of the heavy work, the farmers still had to..."</em>`
+            },
+            {
+                q: "8. Why did the villagers work efficiently together?",
+                options: [
+                    "A. Each person knew his or her responsibility.",
+                    "B. The guide gave constant instructions.",
+                    "C. The students completed the difficult tasks.",
+                    "D. The weather was always dry."
+                ],
+                correct: "A. Each person knew his or her responsibility.",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu hỏi:</strong> Tại sao dân làng phối hợp làm việc rất hiệu quả?<br>
+                2. <strong>Phân tích 4 đáp án:</strong><br>
+                   - A. Mỗi người đều hiểu rõ trách nhiệm của mình.<br>
+                   - B. Người hướng dẫn liên tục đưa ra chỉ dẫn.<br>
+                   - C. Học sinh hoàn thành các công việc khó khăn.<br>
+                   - D. Thời tiết luôn khô ráo.<br>
+                3. <strong>Tại sao chọn A?</strong> Bài viết rõ: <em>"...because each person already understood his or her responsibility."</em>`
+            },
+            {
+                q: "9. How did the students’ view of village life change?",
+                options: [
+                    "A. They found it less friendly than expected.",
+                    "B. They realised it was active and sociable.",
+                    "C. They decided machinery was unnecessary.",
+                    "D. They thought the village was too crowded."
+                ],
+                correct: "B. They realised it was active and sociable.",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu hỏi:</strong> Quan điểm của học sinh về cuộc sống ở làng đã thay đổi như thế nào?<br>
+                2. <strong>Phân tích 4 đáp án:</strong><br>
+                   - A. Thấy ít thân thiện hơn dự đoán.<br>
+                   - B. Nhận ra cuộc sống ở đây rất năng động và cởi mở xã hội.<br>
+                   - C. Cho rằng máy móc là không cần thiết.<br>
+                   - D. Nghĩ rằng ngôi làng quá đông đúc.<br>
+                3. <strong>Tại sao chọn B?</strong> Trích đoạn: <em>"...expected the village to be quiet and rather boring, but they soon discovered that community life was active and sociable."</em>`
+            },
+            {
+                q: "10. What impressed the students most?",
+                options: [
+                    "A. The size of the cottages.",
+                    "B. The speed of the machines.",
+                    "C. The villagers’ hospitality and cooperation.",
+                    "D. The number of photographs they took."
+                ],
+                correct: "C. The villagers’ hospitality and cooperation.",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu hỏi:</strong> Điều gì gây ấn tượng nhất với các học sinh?<br>
+                2. <strong>Phân tích 4 đáp án:</strong><br>
+                   - A. Kích thước nhà cottage.<br>
+                   - B. Tốc độ máy móc.<br>
+                   - C. Lòng hiếu khách và sự hợp tác của dân làng.<br>
+                   - D. Số lượng bức ảnh đã chụp.<br>
+                3. <strong>Tại sao chọn C?</strong> Câu cuối bài: <em>"It was the villagers’ hospitality and the strong cooperation..."</em>`
+            },
+
+            // PASSAGE C
+            {
+                passage: "<strong>PASSAGE C:</strong><br>Before the midterm examinations, Nam began to experience several signs of stress. He slept badly, became impatient with his family, and found it difficult to concentrate on homework. The problem was not caused by one subject. He had three projects to finish, his parents expected high marks, and messages from social media interrupted him whenever he tried to study. Nam initially believed that asking for help would make him appear weak, so he kept the problem to himself. His form teacher noticed that he looked exhausted and suggested a meeting with the school counsellor. During the meeting, the counsellor did not simply tell Nam to “study harder”. She helped him list every task, estimate how long each one would take, and divide the most difficult projects into smaller steps. She also advised him to turn off unnecessary notifications, take short breaks, and stop studying at a reasonable time each night. Nam followed the plan for two weeks. He did not suddenly become free from pressure, but he completed one project ahead of schedule and began sleeping better. He also joined the sports club, where regular exercise helped him relax and meet supportive classmates. The experience taught him that stress should be managed early and that seeking advice is a responsible action, not a failure.",
+                q: "11. Nam’s stress came from several different sources.",
+                options: ["A. True", "B. False"],
+                correct: "A. True",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu hỏi:</strong> Áp lực của Nam đến từ nhiều nguồn khác nhau.<br>
+                2. <strong>Phân tích 2 đáp án:</strong> A. Đúng / B. Sai<br>
+                3. <strong>Tại sao chọn A?</strong> Bài nêu Nam có 3 dự án, kỳ vọng của bố mẹ, và thông báo mạng xã hội (nhiều nguồn).`
+            },
+            {
+                q: "12. The counsellor advised Nam to study continuously without taking breaks.",
+                options: ["A. True", "B. False"],
+                correct: "B. False",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu hỏi:</strong> Tư vấn viên khuyên Nam học liên tục không nghỉ ngơi.<br>
+                2. <strong>Phân tích 2 đáp án:</strong> A. Đúng / B. Sai<br>
+                3. <strong>Tại sao chọn B?</strong> Bài ghi tư vấn viên khuyên <em>"take short breaks"</em> (nghỉ ngơi ngắn) chứ không phải không nghỉ.`
+            },
+            {
+                q: "13. After two weeks, Nam had solved every problem and felt no pressure at all.",
+                options: ["A. True", "B. False"],
+                correct: "B. False",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu hỏi:</strong> Sau 2 tuần, Nam đã giải quyết mọi vấn đề và không còn chút áp lực nào.<br>
+                2. <strong>Phân tích 2 đáp án:</strong> A. Đúng / B. Sai<br>
+                3. <strong>Tại sao chọn B?</strong> Trong bài nêu rõ: <em>"He did not suddenly become free from pressure, but..."</em> (Nam không phải đột nhiên hết hẳn áp lực ngay).`
+            },
+            {
+                q: "14. What did the counsellor do first to help Nam?",
+                options: [
+                    "A. She contacted all his classmates.",
+                    "B. She helped him organise and divide his tasks.",
+                    "C. She removed him from every club.",
+                    "D. She told his parents to lower every expectation."
+                ],
+                correct: "B. She helped him organise and divide his tasks.",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu hỏi:</strong> Tư vấn viên đã làm gì đầu tiên để giúp Nam?<br>
+                2. <strong>Phân tích 4 đáp án:</strong> B đúng vì cô giúp Nam liệt kê, ước tính thời gian và chia nhỏ dự án.`
+            },
+            {
+                q: "15. What lesson did Nam learn?",
+                options: [
+                    "A. Stress should be hidden from adults.",
+                    "B. Social media is the only cause of pressure.",
+                    "C. Asking for suitable support is responsible.",
+                    "D. Students should stop all leisure activities."
+                ],
+                correct: "C. Asking for suitable support is responsible.",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu hỏi:</strong> Nam học được bài học gì?<br>
+                2. <strong>Tại sao chọn C?</strong> Câu cuối ghi: <em>"...seeking advice is a responsible action, not a failure."</em> (Tìm kiếm lời khuyên/sự hỗ trợ là hành động trách nhiệm).`
+            },
+
+            // PASSAGE D
+            {
+                passage: "<strong>PASSAGE D:</strong><br>Green Valley School recently completed a project called “Village Voices Online”. The project began when members of the school forum noticed that many students knew little about the traditional skills practised in a nearby countryside community. Rather than writing a short report from information found on the internet, the students decided to work directly with local residents. Over six Saturdays, they interviewed farmers, recorded demonstrations of basket weaving, and photographed the stages of rice harvesting. Before recording anyone, the students explained the purpose of the project and asked for permission. They also avoided publishing private information such as home addresses or telephone numbers. Back at school, the language club added English captions to the videos, while the computer club edited the sound and created a simple website. The students faced several difficulties. Some recordings contained too much background noise, and the first version of the website was hard to use on mobile phones. However, the groups discussed each problem on the school forum and divided the work according to their skills. The final website attracted comments from parents, teachers, and former students living abroad. The project showed that technology does not have to replace traditional culture. When it is used responsibly, it can help young people understand local knowledge, share it with a wider audience, and build stronger relationships between generations.",
+                q: "16. Why did the students start the project?",
+                options: [
+                    "A. They wanted to promote a new mobile phone.",
+                    "B. They realised students knew little about nearby traditional skills.",
+                    "C. They needed to replace the school forum.",
+                    "D. They wanted to avoid speaking to local residents."
+                ],
+                correct: "B. They realised students knew little about nearby traditional skills.",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu hỏi:</strong> Tại sao học sinh lại bắt đầu dự án này?<br>
+                2. <strong>Tại sao chọn B?</strong> Đúng theo đoạn 1: <em>"...noticed that many students knew little about the traditional skills..."</em>`
+            },
+            {
+                q: "17. What safety rule did students follow?",
+                options: [
+                    "A. They published every address they collected.",
+                    "B. They recorded people without explanation.",
+                    "C. They asked permission and protected private information.",
+                    "D. They allowed only teachers to use the website."
+                ],
+                correct: "C. They asked permission and protected private information.",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu hỏi:</strong> Quy tắc an toàn nào mà học sinh đã tuân thủ?<br>
+                2. <strong>Tại sao chọn C?</strong> Bài ghi: <em>"...asked for permission. They also avoided publishing private information..."</em>`
+            },
+            {
+                q: "18. How did different school clubs contribute?",
+                options: [
+                    "A. They performed the same task separately.",
+                    "B. The language club added captions, and the computer club edited and designed.",
+                    "C. They competed to create different websites.",
+                    "D. The sports club translated all interviews."
+                ],
+                correct: "B. The language club added captions, and the computer club edited and designed.",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu hỏi:</strong> Các câu lạc bộ trường khác nhau đã đóng góp như thế nào?<br>
+                2. <strong>Tại sao chọn B?</strong> CLB Ngoại ngữ thêm phụ đề Tiếng Anh, CLB Tin học chỉnh âm thanh & tạo website.`
+            },
+            {
+                q: "19. How did students respond to technical problems?",
+                options: [
+                    "A. They cancelled the project.",
+                    "B. They asked local farmers to repair the website.",
+                    "C. They discussed problems and shared work according to their skills.",
+                    "D. They removed all videos."
+                ],
+                correct: "C. They discussed problems and shared work according to their skills.",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu hỏi:</strong> Học sinh đã phản ứng thế nào với các sự cố kỹ thuật?<br>
+                2. <strong>Tại sao chọn C?</strong> Trích đoạn: <em>"...discussed each problem on the school forum and divided the work according to their skills."</em>`
+            },
+            {
+                q: "20. What is the main message of the passage?",
+                options: [
+                    "A. Technology always damages traditional culture.",
+                    "B. Online projects should avoid community involvement.",
+                    "C. Responsible technology can help preserve and share local culture.",
+                    "D. Only computer experts can learn traditional skills."
+                ],
+                correct: "C. Responsible technology can help preserve and share local culture.",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu hỏi:</strong> Thông điệp chính của đoạn văn là gì?<br>
+                2. <strong>Tại sao chọn C?</strong> Câu cuối bài: Công nghệ khi được sử dụng có trách nhiệm sẽ giúp bảo tồn và lan tỏa văn hóa địa phương.`
+            },
+
+            // EXERCISE 7 - WORD FORMATION (20 Qs)
+            {
+                section: "EXERCISE 7. WORD FORMATION",
+                q: "1. Doing puzzles can be both relaxing and __________. (ENJOY)",
+                options: ["A. enjoy", "B. enjoyable", "C. enjoyment", "D. enjoyably"],
+                correct: "B. enjoyable",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Từ vựng 4 đáp án:</strong><br>
+                   - A. enjoy (v): Thưởng thức<br>
+                   - B. enjoyable (adj): Thú vị, dễ chịu<br>
+                   - C. enjoyment (n): Sự thích thú<br>
+                   - D. enjoyably (adv): Một cách thú vị<br>
+                2. <strong>Dịch toàn câu:</strong> Giải câu đố vừa có thể giúp thư giãn vừa thú vị.<br>
+                3. <strong>Tại sao chọn B?</strong> Sau cấu trúc "both Adj and ___" cần một tính từ tương đương với "relaxing". Tính từ của ENJOY là <strong>enjoyable</strong>.`
+            },
+            {
+                q: "2. Mai is very __________ in photography. (INTEREST)",
+                options: ["A. interested", "B. interesting", "C. interest", "D. interestingly"],
+                correct: "A. interested",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Phân tích:</strong> Cấu trúc <strong>be interested in sth</strong> (hào hứng, quan tâm đến cái gì).<br>
+                2. <strong>Dịch:</strong> Mai rất quan tâm đến nhiếp ảnh.`
+            },
+            {
+                q: "3. Building dollhouses is a highly __________ activity. (CREATE)",
+                options: ["A. create", "B. creation", "C. creative", "D. creatively"],
+                correct: "C. creative",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Phân tích:</strong> Đứng trước danh từ "activity" cần một tính từ bổ nghĩa.<br>
+                2. Tính từ của CREATE là <strong>creative</strong> (sáng tạo).<br>
+                3. <strong>Dịch:</strong> Làm nhà búp bê là một hoạt động mang tính sáng tạo cao.`
+            },
+            {
+                q: "4. The guide asked us to walk __________ near the machines. (CARE)",
+                options: ["A. care", "B. careful", "C. carefully", "D. carelessness"],
+                correct: "C. carefully",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Phân tích:</strong> Bổ nghĩa cho động từ hành động "walk" cần một trạng từ (adv).<br>
+                2. Trạng từ của CARE mang nghĩa cẩn thận là <strong>carefully</strong>.<br>
+                3. <strong>Dịch:</strong> Người hướng dẫn nhắc chúng tôi đi lại cẩn thận gần máy móc.`
+            },
+            {
+                q: "5. The villagers showed us great __________. (HOSPITABLE)",
+                options: ["A. hospitable", "B. hospitably", "C. hospitality", "D. hospital"],
+                correct: "C. hospitality",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Phân tích:</strong> Sau tính từ "great" cần một danh từ (n).<br>
+                2. Danh từ của HOSPITABLE (hiếu khách) là <strong>hospitality</strong> (lòng hiếu khách).<br>
+                3. <strong>Dịch:</strong> Dân làng đã thể hiện lòng hiếu khách tuyệt vời với chúng tôi.`
+            },
+            {
+                q: "6. The valley is famous for its __________ scenery. (PICTURE)",
+                options: ["A. picture", "B. picturesque", "C. pictorially", "D. pictured"],
+                correct: "B. picturesque",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. Tính từ bổ nghĩa cho "scenery" là <strong>picturesque</strong> (đẹp như tranh vẽ).<br>
+                2. <strong>Dịch:</strong> Thung lũng nổi tiếng với phong cảnh đẹp như tranh vẽ.`
+            },
+            {
+                q: "7. The children played __________ games in the evening. (TRADITION)",
+                options: ["A. tradition", "B. traditional", "C. traditionally", "D. traditionalist"],
+                correct: "B. traditional",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. Đứng trước danh từ "games" cần tính từ <strong>traditional</strong> (truyền thống).<br>
+                2. <strong>Dịch:</strong> Bọn trẻ đã chơi các trò chơi truyền thống vào buổi tối.`
+            },
+            {
+                q: "8. People in the village often speak more __________ than city residents. (QUIET)",
+                options: ["A. quiet", "B. quieter", "C. quietly", "D. quietness"],
+                correct: "C. quietly",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. Bổ nghĩa cho động từ "speak" trong so sánh hơn "more ... than" cần trạng từ <strong>quietly</strong>.<br>
+                2. <strong>Dịch:</strong> Người dân trong làng thường nói chuyện nhỏ nhẹ/lặng lẽ hơn người sống ở thành phố.`
+            },
+            {
+                q: "9. Examinations can create a lot of __________ for teenagers. (PRESS)",
+                options: ["A. press", "B. pressure", "C. pressured", "D. pressing"],
+                correct: "B. pressure",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. Cụm danh từ: "a lot of pressure" (nhiều áp lực). Danh từ của PRESS là <strong>pressure</strong>.<br>
+                2. <strong>Dịch:</strong> Các kỳ thi có thể tạo ra nhiều áp lực cho thanh thiếu niên.`
+            },
+            {
+                q: "10. Notifications may reduce students’ __________. (CONCENTRATE)",
+                options: ["A. concentrate", "B. concentrated", "C. concentration", "D. concentrator"],
+                correct: "C. concentration",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. Sau sở hữu cách "students' " cần một danh từ. Danh từ của CONCENTRATE là <strong>concentration</strong> (sự tập trung).<br>
+                2. <strong>Dịch:</strong> Các thông báo có thể làm giảm sự tập trung của học sinh.`
+            },
+            {
+                q: "11. The school organised the workshop __________. (SUCCESS)",
+                options: ["A. success", "B. successful", "C. successfully", "D. succeed"],
+                correct: "C. successfully",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. Bổ nghĩa cho động từ "organise" ở cuối câu cần trạng từ <strong>successfully</strong> (một cách thành công).<br>
+                2. <strong>Dịch:</strong> Nhà trường đã tổ chức buổi hội thảo rất thành công.`
+            },
+            {
+                q: "12. The school forum is a __________ place to share club news. (USE)",
+                options: ["A. use", "B. useful", "C. uselessly", "D. usage"],
+                correct: "B. useful",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. Đứng trước danh từ "place" cần tính từ <strong>useful</strong> (hữu ích).<br>
+                2. <strong>Dịch:</strong> Diễn đàn trường là một nơi hữu ích để chia sẻ tin tức câu lạc bộ.`
+            },
+            {
+                q: "13. Joining a club can help teenagers build __________. (FRIEND)",
+                options: ["A. friend", "B. friendly", "C. friendship", "D. friendliness"],
+                correct: "C. friendship",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. Cụm từ: build friendship / friendships (xây dựng tình bạn).<br>
+                2. <strong>Dịch:</strong> Tham gia CLB có thể giúp giới trẻ xây dựng tình bạn.`
+            },
+            {
+                q: "14. Students should protect their __________ online. (PRIVATE)",
+                options: ["A. private", "B. privately", "C. privacy", "D. privatise"],
+                correct: "C. privacy",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. Tính từ sở hữu "their" + Danh từ <strong>privacy</strong> (quyền riêng tư).<br>
+                2. <strong>Dịch:</strong> Học sinh nên bảo vệ sự riêng tư của mình trên mạng.`
+            },
+            {
+                q: "15. Parents’ high __________ may cause stress. (EXPECT)",
+                options: ["A. expect", "B. expectant", "C. expectations", "D. expectedly"],
+                correct: "C. expectations",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. Đứng sau tính từ "high" cần danh từ số nhiều <strong>expectations</strong> (những kỳ vọng).<br>
+                2. <strong>Dịch:</strong> Kỳ vọng cao của cha mẹ có thể gây ra áp lực.`
+            },
+            {
+                q: "16. Good __________ is important in a group project. (COMMUNICATE)",
+                options: ["A. communicate", "B. communication", "C. communicative", "D. communicator"],
+                correct: "B. communication",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. Đứng sau tính từ "Good" làm chủ ngữ cần danh từ <strong>communication</strong> (sự giao tiếp).<br>
+                2. <strong>Dịch:</strong> Giao tiếp tốt là điều quan trọng trong một dự án nhóm.`
+            },
+            {
+                q: "17. People spend their leisure time __________. (DIFFERENT)",
+                options: ["A. different", "B. difference", "C. differently", "D. differentiate"],
+                correct: "C. differently",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. Bổ nghĩa cho động từ "spend" chọn trạng từ <strong>differently</strong> (khác nhau).<br>
+                2. <strong>Dịch:</strong> Mọi người sử dụng thời gian rảnh rỗi của mình theo những cách khác nhau.`
+            },
+            {
+                q: "18. Short breaks can help students feel more ________ during long study sessions. (RELAX)",
+                options: ["A. relax", "B. relaxation", "C. relaxed", "D. relaxing"],
+                correct: "C. relaxed",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. Cấu trúc feel + Adj chỉ cảm xúc người -> dùng đuôi -ed: <strong>relaxed</strong>.<br>
+                2. <strong>Dịch:</strong> Những giờ nghỉ ngắn có thể giúp học sinh cảm thấy thư thái hơn trong các buổi học dài.`
+            },
+            {
+                q: "19. The chess __________ attracted students from six classes. (COMPETE)",
+                options: ["A. compete", "B. competition", "C. competitor", "D. competitive"],
+                correct: "B. competition",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. Danh từ ghép: "chess competition" (cuộc thi cờ vua).<br>
+                2. <strong>Dịch:</strong> Cuộc thi cờ vua đã thu hút học sinh đến từ 6 lớp.`
+            },
+            {
+                q: "20. Students must use social media __________. (RESPONSIBLE)",
+                options: ["A. responsible", "B. responsibility", "C. responsibly", "D. irresponsibly"],
+                correct: "C. responsibly",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. Bổ nghĩa cho hành động "use" chọn trạng từ <strong>responsibly</strong> (một cách có trách nhiệm).<br>
+                2. <strong>Dịch:</strong> Học sinh phải sử dụng mạng xã hội một cách có trách nhiệm.`
+            },
+
+            // EXERCISE 8 - SYNONYMS (20 Qs)
+            {
+                section: "EXERCISE 8. SYNONYMS (Từ Đồng Nghĩa)",
+                q: "1. Mai is <strong>keen on</strong> making paper flowers.",
+                options: ["A. interested in", "B. tired of", "C. worried about", "D. unable to"],
+                correct: "A. interested in",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu:</strong> Mai rất thích làm hoa bằng giấy.<br>
+                2. <strong>Từ vựng 4 đáp án:</strong><br>
+                   - A. interested in: Thích, quan tâm<br>
+                   - B. tired of: Mệt mỏi vì<br>
+                   - C. worried about: Lo lắng về<br>
+                   - D. unable to: Không thể<br>
+                3. <strong>Giải thích:</strong> <strong>keen on</strong> = <strong>interested in</strong> (Thích/Đam mê làm gì).`
+            },
+            {
+                q: "2. Tom <strong>detests</strong> getting up late.",
+                options: ["A. practises", "B. hates", "C. avoids completely", "D. remembers"],
+                correct: "B. hates",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu:</strong> Tom ghét dậy muộn.<br>
+                2. <strong>Giải thích:</strong> <strong>detest</strong> (v) = <strong>hate</strong> (ghét).`
+            },
+            {
+                q: "3. Teenagers often <strong>hang out with</strong> friends after school.",
+                options: ["A. compete against", "B. spend time socially with", "C. study instead of", "D. write about"],
+                correct: "B. spend time socially with",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu:</strong> Giới trẻ thường đi tụ tập/chơi với bạn bè sau giờ học.<br>
+                2. <strong>Giải thích:</strong> <strong>hang out with</strong> = <strong>spend time socially with</strong> (dành thời gian giao lưu với).`
+            },
+            {
+                q: "4. The village is famous for its <strong>picturesque</strong> scenery.",
+                options: ["A. polluted", "B. beautiful", "C. ordinary", "D. distant"],
+                correct: "B. beautiful",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu:</strong> Ngôi làng nổi tiếng với phong cảnh đẹp như tranh vẽ.<br>
+                2. <strong>Giải thích:</strong> <strong>picturesque</strong> (đẹp đẽ, thơ mộng) đồng nghĩa với <strong>beautiful</strong>.`
+            },
+            {
+                q: "5. The local people were extremely <strong>hospitable</strong>.",
+                options: ["A. welcoming", "B. impatient", "C. wealthy", "D. silent"],
+                correct: "A. welcoming",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu:</strong> Người dân địa phương cực kỳ hiếu khách.<br>
+                2. <strong>Giải thích:</strong> <strong>hospitable</strong> = <strong>welcoming</strong> (mến khách, chào đón).`
+            },
+            {
+                q: "6. A <strong>vast</strong> paddy field stretched beyond the village.",
+                options: ["A. very small", "B. very large", "C. recently planted", "D. carefully protected"],
+                correct: "B. very large",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu:</strong> Một cánh đồng lúa bao la trải dài phía sau làng.<br>
+                2. <strong>Giải thích:</strong> <strong>vast</strong> (bao la, rộng lớn) = <strong>very large</strong>.`
+            },
+            {
+                q: "7. The farmers are <strong>hard-working</strong> during harvest time.",
+                options: ["A. diligent", "B. relaxed", "C. inexperienced", "D. careless"],
+                correct: "A. diligent",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu:</strong> Nông dân rất chăm chỉ trong mùa thu hoạch.<br>
+                2. <strong>Giải thích:</strong> <strong>hard-working</strong> = <strong>diligent</strong> (chăm chỉ, cần cù).`
+            },
+            {
+                q: "8. Workers <strong>unloaded</strong> the rice from the truck.",
+                options: ["A. put the rice onto", "B. took the rice off", "C. sold the rice beside", "D. covered the rice with"],
+                correct: "B. took the rice off",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu:</strong> Công nhân bốc dỡ lúa xuống khỏi xe tải.<br>
+                2. <strong>Giải thích:</strong> <strong>unload</strong> = <strong>take off</strong> (dỡ hàng xuống).`
+            },
+            {
+                q: "9. Students felt <strong>under pressure</strong> before the examinations.",
+                options: ["A. confident", "B. stressed", "C. curious", "D. disappointed"],
+                correct: "B. stressed",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu:</strong> Học sinh cảm thấy bị áp lực trước kỳ thi.<br>
+                2. <strong>Giải thích:</strong> <strong>under pressure</strong> = <strong>stressed</strong> (căng thẳng, áp lực).`
+            },
+            {
+                q: "10. Turn off notifications so that you can <strong>concentrate</strong>.",
+                options: ["A. focus", "B. communicate", "C. relax completely", "D. compete"],
+                correct: "A. focus",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu:</strong> Tắt thông báo để bạn có thể tập trung.<br>
+                2. <strong>Giải thích:</strong> <strong>concentrate</strong> = <strong>focus</strong> (tập trung).`
+            },
+            {
+                q: "11. The counsellor suggested a <strong>realistic</strong> timetable.",
+                options: ["A. practical", "B. impossible", "C. traditional", "D. complicated"],
+                correct: "A. practical",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu:</strong> Người tư vấn đã gợi ý một thời khóa biểu thực tế.<br>
+                2. <strong>Giải thích:</strong> <strong>realistic</strong> = <strong>practical</strong> (thực tế, khả thi).`
+            },
+            {
+                q: "12. Students should protect <strong>private</strong> information online.",
+                options: ["A. personal", "B. public", "C. useful", "D. false"],
+                correct: "A. personal",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu:</strong> Học sinh nên bảo vệ thông tin riêng tư trên mạng.<br>
+                2. <strong>Giải thích:</strong> <strong>private</strong> = <strong>personal</strong> (cá nhân, riêng tư).`
+            },
+            {
+                q: "13. The school <strong>forum</strong> is used for online discussions.",
+                options: ["A. examination room", "B. discussion platform", "C. sports field", "D. village market"],
+                correct: "B. discussion platform",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu:</strong> Diễn đàn trường học được dùng để thảo luận trực tuyến.<br>
+                2. <strong>Giải thích:</strong> <strong>forum</strong> = <strong>discussion platform</strong> (nền tảng thảo luận).`
+            },
+            {
+                q: "14. Teenagers need to <strong>manage</strong> stress effectively.",
+                options: ["A. create", "B. deal with", "C. ignore", "D. increase"],
+                correct: "B. deal with",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu:</strong> Giới trẻ cần quản lý/giải quyết căng thẳng một cách hiệu quả.<br>
+                2. <strong>Giải thích:</strong> <strong>manage</strong> = <strong>deal with</strong> (xử lý, đối phó).`
+            },
+            {
+                q: "15. Doing puzzles can <strong>improve</strong> your memory.",
+                options: ["A. make better", "B. test completely", "C. reduce", "D. replace"],
+                correct: "A. make better",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu:</strong> Giải đố có thể cải thiện trí nhớ của bạn.<br>
+                2. <strong>Giải thích:</strong> <strong>improve</strong> = <strong>make better</strong> (làm tốt hơn, cải thiện).`
+            },
+            {
+                q: "16. The workshop helped <strong>reduce</strong> students’ stress.",
+                options: ["A. measure", "B. decrease", "C. hide", "D. cause"],
+                correct: "B. decrease",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu:</strong> Buổi hội thảo đã giúp làm giảm áp lực cho học sinh.<br>
+                2. <strong>Giải thích:</strong> <strong>reduce</strong> = <strong>decrease</strong> (giảm thiểu).`
+            },
+            {
+                q: "17. The cottage was <strong>surrounded by</strong> green fields.",
+                options: ["A. located far from", "B. encircled by", "C. built above", "D. connected with"],
+                correct: "B. encircled by",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu:</strong> Ngôi nhà nhỏ được bao quanh bởi những cánh đồng xanh.<br>
+                2. <strong>Giải thích:</strong> <strong>surrounded by</strong> = <strong>encircled by</strong> (được bao quanh bởi).`
+            },
+            {
+                q: "18. The village horses were <strong>well-trained</strong>.",
+                options: ["A. properly trained", "B. badly behaved", "C. very young", "D. rarely used"],
+                correct: "A. properly trained",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu:</strong> Những chú ngựa trong làng đã được huấn luyện tốt.<br>
+                2. <strong>Giải thích:</strong> <strong>well-trained</strong> = <strong>properly trained</strong> (được huấn luyện bài bản).`
+            },
+            {
+                q: "19. Students should <strong>ask for permission</strong> before posting group photos.",
+                options: ["A. request approval", "B. give an order", "C. send a warning", "D. make a complaint"],
+                correct: "A. request approval",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu:</strong> Học sinh nên xin phép trước khi đăng ảnh nhóm.<br>
+                2. <strong>Giải thích:</strong> <strong>ask for permission</strong> = <strong>request approval</strong> (xin sự chấp thuận/cho phép).`
+            },
+            {
+                q: "20. Exercise has many <strong>benefits</strong> for teenagers.",
+                options: ["A. disadvantages", "B. advantages", "C. pressures", "D. expectations"],
+                correct: "B. advantages",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu:</strong> Tập thể dục mang lại nhiều lợi ích cho thanh thiếu niên.<br>
+                2. <strong>Giải thích:</strong> <strong>benefits</strong> = <strong>advantages</strong> (lợi ích, điểm tốt).`
+            },
+
+            // EXERCISE 9 - ANTONYMS (20 Qs)
+            {
+                section: "EXERCISE 9. ANTONYMS (Từ Trái Nghĩa)",
+                q: "1. She is <strong>keen on</strong> doing DIY.",
+                options: ["A. interested in", "B. not interested in", "C. good at", "D. responsible for"],
+                correct: "B. not interested in",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu:</strong> Cô ấy thích làm đồ tự chế (DIY).<br>
+                2. <strong>Giải thích:</strong> <strong>keen on</strong> (thích) TRAI NGHĨA VỚI <strong>not interested in</strong> (không thích/không quan tâm).`
+            },
+            {
+                q: "2. Nam <strong>accepted</strong> the invitation to join the club.",
+                options: ["A. received", "B. declined", "C. repeated", "D. discussed"],
+                correct: "B. declined",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu:</strong> Nam đã chấp nhận lời mời tham gia CLB.<br>
+                2. <strong>Giải thích:</strong> <strong>accept</strong> (chấp nhận) TRÁI NGHĨA VỚI <strong>decline</strong> (từ chối).`
+            },
+            {
+                q: "3. The village is <strong>quiet</strong> and peaceful.",
+                options: ["A. noisy", "B. picturesque", "C. traditional", "D. hospitable"],
+                correct: "A. noisy",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu:</strong> Ngôi làng rất yên tĩnh và thanh bình.<br>
+                2. <strong>Giải thích:</strong> <strong>quiet</strong> (yên tĩnh) TRÁI NGHĨA VỚI <strong>noisy</strong> (ồn ào).`
+            },
+            {
+                q: "4. The residents were <strong>hospitable</strong> to visitors.",
+                options: ["A. friendly", "B. unfriendly", "C. careful", "D. helpful"],
+                correct: "B. unfriendly",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu:</strong> Dân cư rất hiếu khách với du khách.<br>
+                2. <strong>Giải thích:</strong> <strong>hospitable</strong> (hiếu khách, thân thiện) TRÁI NGHĨA VỚI <strong>unfriendly</strong> (không thân thiện).`
+            },
+            {
+                q: "5. The valley is <strong>vast</strong>.",
+                options: ["A. enormous", "B. tiny", "C. open", "D. green"],
+                correct: "B. tiny",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu:</strong> Thung lũng rất rộng lớn.<br>
+                2. <strong>Giải thích:</strong> <strong>vast</strong> (bao la) TRÁI NGHĨA VỚI <strong>tiny</strong> (nhỏ bé).`
+            },
+            {
+                q: "6. The farmers are <strong>hard-working</strong>.",
+                options: ["A. experienced", "B. lazy", "C. well-trained", "D. patient"],
+                correct: "B. lazy",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu:</strong> Nông dân rất chăm chỉ.<br>
+                2. <strong>Giải thích:</strong> <strong>hard-working</strong> (chăm chỉ) TRÁI NGHĨA VỚI <strong>lazy</strong> (lười biếng).`
+            },
+            {
+                q: "7. Please operate the machine <strong>carefully</strong>.",
+                options: ["A. slowly", "B. carelessly", "C. efficiently", "D. quietly"],
+                correct: "B. carelessly",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu:</strong> Vui lòng vận hành máy một cách cẩn thận.<br>
+                2. <strong>Giải thích:</strong> <strong>carefully</strong> (cẩn thận) TRÁI NGHĨA VỚI <strong>carelessly</strong> (bất cẩn).`
+            },
+            {
+                q: "8. The horse ran <strong>faster</strong> than the buffalo.",
+                options: ["A. more slowly", "B. more safely", "C. earlier", "D. farther"],
+                correct: "A. more slowly",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu:</strong> Con ngựa chạy nhanh hơn con trâu.<br>
+                2. <strong>Giải thích:</strong> <strong>faster</strong> (nhanh hơn) TRÁI NGHĨA VỚI <strong>more slowly</strong> (chậm hơn).`
+            },
+            {
+                q: "9. Do not share <strong>private</strong> information.",
+                options: ["A. personal", "B. public", "C. useful", "D. correct"],
+                correct: "B. public",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu:</strong> Đừng chia sẻ thông tin riêng tư.<br>
+                2. <strong>Giải thích:</strong> <strong>private</strong> (riêng tư) TRÁI NGHĨA VỚI <strong>public</strong> (công khai).`
+            },
+            {
+                q: "10. The counsellor gave Nam a <strong>realistic</strong> plan.",
+                options: ["A. practical", "B. achievable", "C. impractical", "D. detailed"],
+                correct: "C. impractical",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu:</strong> Người tư vấn đã đưa cho Nam một kế hoạch thực tế.<br>
+                2. <strong>Giải thích:</strong> <strong>realistic</strong> (thực tế) TRÁI NGHĨA VỚI <strong>impractical</strong> (không thực tế/không khả thi).`
+            },
+            {
+                q: "11. The new routine <strong>reduced</strong> Mai’s stress.",
+                options: ["A. decreased", "B. increased", "C. controlled", "D. measured"],
+                correct: "B. increased",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu:</strong> Thói quen mới đã làm giảm áp lực của Mai.<br>
+                2. <strong>Giải thích:</strong> <strong>reduce</strong> (giảm) TRÁI NGHĨA VỚI <strong>increase</strong> (tăng).`
+            },
+            {
+                q: "12. Puzzles can <strong>improve</strong> concentration.",
+                options: ["A. strengthen", "B. worsen", "C. test", "D. require"],
+                correct: "B. worsen",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu:</strong> Các trò chơi đố vui có thể cải thiện sự tập trung.<br>
+                2. <strong>Giải thích:</strong> <strong>improve</strong> (cải thiện) TRÁI NGHĨA VỚI <strong>worsen</strong> (làm tồi tệ đi).`
+            },
+            {
+                q: "13. The forum helps students <strong>connect with</strong> club members.",
+                options: ["A. communicate", "B. disconnect from", "C. cooperate", "D. discuss"],
+                correct: "B. disconnect from",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu:</strong> Diễn đàn giúp học sinh kết nối với các thành viên CLB.<br>
+                2. <strong>Giải thích:</strong> <strong>connect with</strong> (kết nối) TRÁI NGHĨA VỚI <strong>disconnect from</strong> (mất kết nối/ngắt kết nối).`
+            },
+            {
+                q: "14. The instructions were very <strong>useful</strong>.",
+                options: ["A. helpful", "B. useless", "C. clear", "D. brief"],
+                correct: "B. useless",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu:</strong> Các hướng dẫn rất hữu ích.<br>
+                2. <strong>Giải thích:</strong> <strong>useful</strong> (hữu ích) TRÁI NGHĨA VỚI <strong>useless</strong> (vô dụng).`
+            },
+            {
+                q: "15. Exam week can be <strong>stressful</strong>.",
+                options: ["A. demanding", "B. relaxing", "C. busy", "D. important"],
+                correct: "B. relaxing",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu:</strong> Tuần thi cử có thể rất căng thẳng.<br>
+                2. <strong>Giải thích:</strong> <strong>stressful</strong> (căng thẳng) TRÁI NGHĨA VỚI <strong>relaxing</strong> (thư giãn).`
+            },
+            {
+                q: "16. The villagers played <strong>traditional</strong> games.",
+                options: ["A. local", "B. modern", "C. enjoyable", "D. outdoor"],
+                correct: "B. modern",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu:</strong> Dân làng đã chơi các trò chơi truyền thống.<br>
+                2. <strong>Giải thích:</strong> <strong>traditional</strong> (truyền thống) TRÁI NGHĨA VỚI <strong>modern</strong> (hiện đại).`
+            },
+            {
+                q: "17. Students meet <strong>online</strong> twice a week.",
+                options: ["A. regularly", "B. face to face", "C. carefully", "D. privately"],
+                correct: "B. face to face",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu:</strong> Học sinh gặp nhau trực tuyến 2 lần một tuần.<br>
+                2. <strong>Giải thích:</strong> <strong>online</strong> (trực tuyến) TRÁI NGHĨA VỚI <strong>face to face</strong> (trực tiếp/mặt đối mặt).`
+            },
+            {
+                q: "18. Mai <strong>frequently</strong> checks the school forum.",
+                options: ["A. often", "B. rarely", "C. quickly", "D. immediately"],
+                correct: "B. rarely",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu:</strong> Mai thường xuyên kiểm tra diễn đàn trường.<br>
+                2. <strong>Giải thích:</strong> <strong>frequently</strong> (thường xuyên) TRÁI NGHĨA VỚI <strong>rarely</strong> (hiếm khi).`
+            },
+            {
+                q: "19. The website allows <strong>public</strong> comments.",
+                options: ["A. private", "B. polite", "C. useful", "D. direct"],
+                correct: "A. private",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu:</strong> Trang web cho phép bình luận công khai.<br>
+                2. <strong>Giải thích:</strong> <strong>public</strong> (công khai) TRÁI NGHĨA VỚI <strong>private</strong> (riêng tư/bảo mật).`
+            },
+            {
+                q: "20. Lan remained <strong>calm</strong> before the presentation.",
+                options: ["A. confident", "B. anxious", "C. prepared", "D. quiet"],
+                correct: "B. anxious",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch câu:</strong> Lan vẫn giữ bình tĩnh trước bài thuyết trình.<br>
+                2. <strong>Giải thích:</strong> <strong>calm</strong> (bình tĩnh) TRÁI NGHĨA VỚI <strong>anxious</strong> (lo âu, lo lắng).`
+            },
+
+            // EXERCISE 10 - DICTIONARY ENTRIES (6 Qs)
+            {
+                section: "EXERCISE 10. DICTIONARY ENTRIES",
+                passage: "<strong>DICTIONARY CARDS:</strong><br>" +
+                         "• <strong>leisure</strong> /ˈleʒə(r)/ noun: time when you are not working or studying (leisure time, a leisure activity, a leisure centre, leisure interests, at leisure, leisure facilities)<br>" +
+                         "• <strong>countryside</strong> /ˈkʌntrisaɪd/ noun: land outside towns and cities (in the countryside, open countryside, countryside scenery, countryside life, a countryside village)<br>" +
+                         "• <strong>pressure</strong> /ˈpreʃə(r)/ noun: worry or difficulty (under pressure, peer pressure, put pressure on, deal with pressure, relieve pressure)",
+                q: "1. Teenagers need enough __________________________ to rest and develop personal interests.",
+                options: ["A. leisure time", "B. a leisure activity", "C. a leisure centre", "D. at leisure"],
+                correct: "A. leisure time",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch:</strong> Giới trẻ cần đủ thời gian rảnh rỗi để nghỉ ngơi và phát triển sở thích cá nhân.<br>
+                2. <strong>Giải thích:</strong> "leisure time" (thời gian rảnh rỗi) phù hợp nhất về nghĩa ngữ cảnh.`
+            },
+            {
+                q: "2. Students meet at the new __________________________ to take part in sports and craft workshops.",
+                options: ["A. leisure activity", "B. leisure centre", "C. leisure interests", "D. at leisure"],
+                correct: "B. leisure centre",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch:</strong> Học sinh gặp nhau tại trung tâm giải trí mới để tham gia thể thao và hội thảo thủ công.<br>
+                2. <strong>Giải thích:</strong> "leisure centre" nghĩa là trung tâm giải trí/vui chơi.`
+            },
+            {
+                q: "3. The photography competition focuses on beautiful __________________________.",
+                options: ["A. countryside scenery", "B. in the countryside", "C. open countryside", "D. countryside village"],
+                correct: "A. countryside scenery",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch:</strong> Cuộc thi ảnh tập trung vào phong cảnh miền quê tuyệt đẹp.<br>
+                2. <strong>Giải thích:</strong> "countryside scenery" = phong cảnh nông thôn/miền quê.`
+            },
+            {
+                q: "4. My grandparents have lived __________________________ for more than thirty years.",
+                options: ["A. countryside life", "B. in the countryside", "C. countryside experience", "D. open countryside"],
+                correct: "B. in the countryside",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch:</strong> Ông bà tôi đã sống ở nông thôn hơn 30 năm.<br>
+                2. <strong>Giải thích:</strong> Cụm trạng ngữ chỉ nơi chốn "in the countryside" (ở miền quê).`
+            },
+            {
+                q: "5. Many students feel __________________________ before important examinations.",
+                options: ["A. under pressure", "B. peer pressure", "C. put pressure on", "D. relieve pressure"],
+                correct: "A. under pressure",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch:</strong> Nhiều học sinh cảm thấy bị áp lực trước các kỳ thi quan trọng.<br>
+                2. <strong>Giải thích:</strong> Cụm từ "feel under pressure" (cảm thấy chịu áp lực).`
+            },
+            {
+                q: "6. Learning to make independent decisions can help teenagers resist __________________________.",
+                options: ["A. under pressure", "B. peer pressure", "C. relieve pressure", "D. pressure from"],
+                correct: "B. peer pressure",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Dịch:</strong> Học cách đưa ra quyết định độc lập có thể giúp thanh thiếu niên chống lại áp lực từ bạn bè đồng lứa.<br>
+                2. <strong>Giải thích:</strong> "peer pressure" = áp lực đồng lứa.`
+            },
+
+            // EXERCISE 11 - SENTENCE TRANSFORMATION (20 Qs)
+            {
+                section: "EXERCISE 11. SENTENCE TRANSFORMATION",
+                q: "1. I like reading more than watching television.",
+                options: [
+                    "A. I prefer reading to watching television.",
+                    "B. I prefer reading than watching television.",
+                    "C. I prefer to read to watching television.",
+                    "D. I prefer reading more than watching television."
+                ],
+                correct: "A. I prefer reading to watching television.",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Cấu trúc:</strong> Prefer V-ing TO V-ing (Thích làm gì hơn làm gì).<br>
+                2. <strong>Dịch:</strong> Tôi thích đọc sách hơn xem tivi.<br>
+                3. Các câu B, C, D sai cấu trúc chuẩn của prefer.`
+            },
+            {
+                q: "2. She hates getting up early on Sundays.",
+                options: [
+                    "A. She detests get up early on Sundays.",
+                    "B. She detests getting up early on Sundays.",
+                    "C. She detests to get up early on Sundays.",
+                    "D. She detests to getting up early on Sundays."
+                ],
+                correct: "B. She detests getting up early on Sundays.",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Cấu trúc:</strong> detest + V-ing (ghét làm gì).<br>
+                2. <strong>Dịch:</strong> Cô ấy ghét việc dậy sớm vào các ngày Chủ nhật.`
+            },
+            {
+                q: "3. Would you like to join us for a walk?",
+                options: [
+                    "A. Do you fancy to join us for a walk?",
+                    "B. Do you fancy joining us for a walk?",
+                    "C. Do you fancy join us for a walk?",
+                    "D. Do you fancy joined us for a walk?"
+                ],
+                correct: "B. Do you fancy joining us for a walk?",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Cấu trúc:</strong> Fancy + V-ing? (Thích / muốn làm gì?).<br>
+                2. <strong>Dịch:</strong> Bạn có thích đi dạo cùng chúng tôi không?`
+            },
+            {
+                q: "4. He is keen on cycling in the countryside.",
+                options: [
+                    "A. He is interested on cycling in the countryside.",
+                    "B. He is interested in cycling in the countryside.",
+                    "C. He is interested for cycling in the countryside.",
+                    "D. He is interested to cycle in the countryside."
+                ],
+                correct: "B. He is interested in cycling in the countryside.",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Cấu trúc:</strong> Be keen on = Be interested in + V-ing.<br>
+                2. <strong>Dịch:</strong> Anh ấy thích đi xe đạp ở miền quê.`
+            },
+            {
+                q: "5. I do not like messaging strangers online.",
+                options: [
+                    "A. I am not into messaging strangers online.",
+                    "B. I am not into message strangers online.",
+                    "C. I am not into to message strangers online.",
+                    "D. I am not into for messaging strangers online."
+                ],
+                correct: "A. I am not into messaging strangers online.",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Cấu trúc:</strong> Be into + V-ing / N (Thích cái gì). Not into = Không thích.<br>
+                2. <strong>Dịch:</strong> Tôi không thích nhắn tin với người lạ trên mạng.`
+            },
+            {
+                q: "6. People in the city travel faster than people in the countryside.",
+                options: [
+                    "A. People in the countryside travel more slowly than people in the city.",
+                    "B. People in the countryside travel faster than people in the city.",
+                    "C. People in the countryside travel as fast as people in the city.",
+                    "D. People in the countryside travel most slowly than people in the city."
+                ],
+                correct: "A. People in the countryside travel more slowly than people in the city.",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Chuyển đổi so sánh:</strong> Nhanh hơn -> Chậm hơn (more slowly than).<br>
+                2. <strong>Dịch:</strong> Người ở nông thôn đi lại chậm hơn người ở thành phố.`
+            },
+            {
+                q: "7. A horse can run faster than a buffalo.",
+                options: [
+                    "A. A buffalo cannot run as fast as a horse.",
+                    "B. A buffalo can run as fast as a horse.",
+                    "C. A buffalo cannot run faster as a horse.",
+                    "D. A buffalo cannot run more fast than a horse."
+                ],
+                correct: "A. A buffalo cannot run as fast as a horse.",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Cấu trúc:</strong> So sánh hơn -> So sánh không bằng (cannot run as fast as).<br>
+                2. <strong>Dịch:</strong> Con trâu không thể chạy nhanh bằng con ngựa.`
+            },
+            {
+                q: "8. Mai dances more beautifully than Hoa.",
+                options: [
+                    "A. Hoa does not dance as beautiful as Mai.",
+                    "B. Hoa does not dance as beautifully as Mai.",
+                    "C. Hoa dances as beautifully as Mai.",
+                    "D. Hoa does not dance more beautifully as Mai."
+                ],
+                correct: "B. Hoa does not dance as beautifully as Mai.",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. Bổ nghĩa động từ "dance" cần trạng từ "beautifully". Cấu trúc so sánh không bằng: not as + adv + as.<br>
+                2. <strong>Dịch:</strong> Hoa nhảy không đẹp bằng Mai.`
+            },
+            {
+                q: "9. The farmers now operate the machine more carefully than before.",
+                options: [
+                    "A. Before, the farmers did not operate the machine as carefully as now.",
+                    "B. Before, the farmers operated the machine as carefully as now.",
+                    "C. Before, the farmers do not operate the machine as careful as now.",
+                    "D. Before, the farmers did not operate the machine more careful than now."
+                ],
+                correct: "A. Before, the farmers did not operate the machine as carefully as now.",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. Quá khứ đơn "did not operate" kết hợp với so sánh không bằng "as carefully as".<br>
+                2. <strong>Dịch:</strong> Trước đây, nông dân không vận hành máy cẩn thận như hiện tại.`
+            },
+            {
+                q: "10. This is a very picturesque village.",
+                options: [
+                    "A. What a picturesque village!",
+                    "B. What picturesque village!",
+                    "C. How a picturesque village!",
+                    "D. What picturesque a village!"
+                ],
+                correct: "A. What a picturesque village!",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Câu cảm thán:</strong> What + a/an + Adj + N (đếm được số ít)! -> What a picturesque village!<br>
+                2. <strong>Dịch:</strong> Thật là một ngôi làng đẹp như tranh vẽ!`
+            },
+            {
+                q: "11. Nam felt stressed. He made a realistic timetable. (Use “so”.)",
+                options: [
+                    "A. Nam felt stressed, so he made a realistic timetable.",
+                    "B. Nam felt stressed so he make a realistic timetable.",
+                    "C. Nam felt stressed, so made a realistic timetable.",
+                    "D. Nam felt stressed, so he makes a realistic timetable."
+                ],
+                correct: "A. Nam felt stressed, so he made a realistic timetable.",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. Dùng từ nối chỉ kết quả "so" (cho nên/vì vậy) kèm dấu phẩy.<br>
+                2. <strong>Dịch:</strong> Nam cảm thấy bị áp lực, vì vậy cậu ấy đã lập một thời khóa biểu thực tế.`
+            },
+            {
+                q: "12. Social media is useful. Teenagers should protect their private information. (Use “however”.)",
+                options: [
+                    "A. Social media is useful; however, teenagers should protect their private information.",
+                    "B. Social media is useful however, teenagers should protect their private information.",
+                    "C. Social media is useful, however teenagers should protect their private information.",
+                    "D. Social media is useful; however teenagers should protect their private information."
+                ],
+                correct: "A. Social media is useful; however, teenagers should protect their private information.",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. Dấu câu đúng chuẩn cho trạng từ liên kết "however": chấm phẩy trước, phẩy sau ( <strong>; however,</strong> ).<br>
+                2. <strong>Dịch:</strong> Mạng xã hội rất hữu ích; tuy nhiên, giới trẻ nên bảo vệ thông tin cá nhân của mình.`
+            },
+            {
+                q: "13. Turn off your notifications, or you may lose concentration.",
+                options: [
+                    "A. If you do not turn off your notifications, you may lose concentration.",
+                    "B. If you turn off your notifications, you may lose concentration.",
+                    "C. If you do not turn off your notifications, or you may lose concentration.",
+                    "D. If you not turn off your notifications, you may lose concentration."
+                ],
+                correct: "A. If you do not turn off your notifications, you may lose concentration.",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. Chuyển từ mệnh lệnh + OR sang câu điều kiện If loại 1 phủ định.<br>
+                2. <strong>Dịch:</strong> Nếu bạn không tắt thông báo, bạn có thể bị mất tập trung.`
+            },
+            {
+                q: "14. Could you show me how to upload this photo? (Use “Would you mind”.)",
+                options: [
+                    "A. Would you mind showing me how to upload this photo?",
+                    "B. Would you mind to show me how to upload this photo?",
+                    "C. Would you mind show me how to upload this photo?",
+                    "D. Would you mind if showing me how to upload this photo?"
+                ],
+                correct: "A. Would you mind showing me how to upload this photo?",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Cấu trúc:</strong> Would you mind + V-ing? (Bạn có phiền làm gì...?).<br>
+                2. <strong>Dịch:</strong> Bạn có phiền chỉ cho tôi cách tải bức ảnh này lên không?`
+            },
+            {
+                q: "15. “Please help me log on to the forum,” Lan said to Mai.",
+                options: [
+                    "A. Lan asked Mai to help her log on to the forum.",
+                    "B. Lan asked Mai help her log on to the forum.",
+                    "C. Lan asked Mai to help him log on to the forum.",
+                    "D. Lan asked Mai to helping her log on to the forum."
+                ],
+                correct: "A. Lan asked Mai to help her log on to the forum.",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. Câu tường thuật lời yêu cầu: ask sb + TO V. Đổi "me" thành "her" (vì Lan là nữ).<br>
+                2. <strong>Dịch:</strong> Lan nhờ Mai giúp cô ấy đăng nhập vào diễn đàn.`
+            },
+            {
+                q: "16. Although Minh was tired, he completed his club project.",
+                options: [
+                    "A. Despite being tired, Minh completed his club project.",
+                    "B. Despite Minh was tired, he completed his club project.",
+                    "C. Despite of being tired, Minh completed his club project.",
+                    "D. Despite be tired, Minh completed his club project."
+                ],
+                correct: "A. Despite being tired, Minh completed his club project.",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. Chuyển từ Although + Clause sang <strong>Despite + V-ing</strong> (cùng chủ ngữ Minh).<br>
+                2. <strong>Dịch:</strong> Mặc dù mệt mỏi, Minh vẫn hoàn thành dự án câu lạc bộ.`
+            },
+            {
+                q: "17. Mai was stressed, so she talked to the school counsellor.",
+                options: [
+                    "A. Because Mai was stressed, she talked to the school counsellor.",
+                    "B. Because Mai was stressed, so she talked to the school counsellor.",
+                    "C. Because of Mai was stressed, she talked to the school counsellor.",
+                    "D. Because Mai is stressed, she talked to the school counsellor."
+                ],
+                correct: "A. Because Mai was stressed, she talked to the school counsellor.",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. Dùng <strong>Because + Mệnh đề</strong> chỉ nguyên nhân (không dùng "so" trong cùng câu có "because").<br>
+                2. <strong>Dịch:</strong> Vì Mai bị áp lực, cô ấy đã nói chuyện với tư vấn viên trường.`
+            },
+            {
+                q: "18. He joined the sports club because he wanted to make new friends.",
+                options: [
+                    "A. He joined the sports club to make new friends.",
+                    "B. He joined the sports club for make new friends.",
+                    "C. He joined the sports club so to make new friends.",
+                    "D. He joined the sports club to making new friends."
+                ],
+                correct: "A. He joined the sports club to make new friends.",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. Cấu trúc chỉ mục đích: <strong>To + V-bare</strong> (Để làm gì).<br>
+                2. <strong>Dịch:</strong> Anh ấy tham gia câu lạc bộ thể thao để kết bạn mới.`
+            },
+            {
+                q: "19. The forum can be distracting, but it is useful for club communication.",
+                options: [
+                    "A. Although the forum can be distracting, but it is useful for club communication.",
+                    "B. Although the forum can be distracting, it is useful for club communication.",
+                    "C. Although the forum is distracting, and it is useful for club communication.",
+                    "D. Although can be distracting, the forum is useful for club communication."
+                ],
+                correct: "B. Although the forum can be distracting, it is useful for club communication.",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. Cấu trúc <strong>Although + Mệnh đề 1, Mệnh đề 2</strong> (Không có 'but').<br>
+                2. <strong>Dịch:</strong> Mặc dù diễn đàn có thể gây xao nhãng, nó rất hữu ích cho việc trao đổi thông tin trong câu lạc bộ.`
+            },
+            {
+                q: "20. Manage your time carefully, or you may feel more pressure.",
+                options: [
+                    "A. Manage your time carefully; otherwise, you may feel more pressure.",
+                    "B. Manage your time carefully otherwise, you may feel more pressure.",
+                    "C. Manage your time carefully, otherwise, you may feel more pressure.",
+                    "D. Manage your time carefully; otherwise you may feel more pressure."
+                ],
+                correct: "A. Manage your time carefully; otherwise, you may feel more pressure.",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. Quy tắc dấu câu với trạng từ liên kết "otherwise" (nếu không thì): <strong>; otherwise,</strong><br>
+                2. <strong>Dịch:</strong> Hãy quản lý thời gian cẩn thận; nếu không, bạn có thể cảm thấy áp lực hơn.`
+            },
+
+            // EXERCISE 12 - DIALOGUE ORDERING (10 Qs)
+            {
+                section: "EXERCISE 12. DIALOGUE ORDERING",
+                q: "1. Arrange the five sentences to make a complete dialogue:<br>" +
+                   "a. That sounds perfect. I will bring my student card and meet you there.<br>" +
+                   "b. Would you like to see the new adventure film at the community cinema on Saturday evening?<br>" +
+                   "c. The 6.30 show is less crowded, and we can buy the tickets online this afternoon.<br>" +
+                   "d. I’d love to. Which show do you think we should choose?<br>" +
+                   "e. Great. Let’s meet outside the main entrance fifteen minutes before it starts.",
+                options: ["A. d – b – c – a – e", "B. b – d – c – a – e", "C. b – c – d – a – e", "D. b – d – a – c – e"],
+                correct: "B. b – d – c – a – e",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Thứ tự hội thoại chuẩn B (b – d – c – a – e):</strong><br>
+                   - (b) Lời mời xem phim vào tối thứ Bảy.<br>
+                   - (d) Đồng ý và hỏi nên chọn suất chiếu nào.<br>
+                   - (c) Gợi ý suất 6h30 bớt đông và mua vé online chiều nay.<br>
+                   - (a) Đồng ý và hẹn mang thẻ học sinh.<br>
+                   - (e) Chốt lịch gặp trước cửa chính 15 phút.`
+            },
+            {
+                q: "2. Arrange the five sentences to make a complete dialogue:<br>" +
+                   "a. I’m glad you like it. I took it just after sunrise when the fields were covered in mist.<br>" +
+                   "b. After you took it at sunrise, did you use a camera or your phone to capture the colours?<br>" +
+                   "c. Your photograph of the paddy fields is absolutely beautiful.<br>" +
+                   "d. I used my father’s camera, but he showed me how to adjust the light first.<br>" +
+                   "e. That explains why the picture looks so professional.",
+                options: ["A. c – b – a – d – e", "B. c – a – d – b – e", "C. a – c – b – d – e", "D. c – a – b – d – e"],
+                correct: "D. c – a – b – d – e",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Thứ tự hội thoại chuẩn D (c – a – b – d – e):</strong><br>
+                   - (c) Khen bức ảnh cánh đồng lúa đẹp.<br>
+                   - (a) Bày tỏ niềm vui và kể về thời điểm chụp lúc bình minh.<br>
+                   - (b) Hỏi chụp bằng máy ảnh hay điện thoại.<br>
+                   - (d) Trả lời là dùng máy ảnh của bố.<br>
+                   - (e) Nhận xét điều đó giải thích vì sao bức ảnh trông chuyên nghiệp.`
+            },
+            {
+                q: "3. Arrange the five sentences to make a complete dialogue:<br>" +
+                   "a. Of course. First, enter your school email address and create a strong password.<br>" +
+                   "b. Thanks. Should I upload my profile photo immediately?<br>" +
+                   "c. Could you show me how to create an account on the school forum?<br>" +
+                   "d. Not yet. Read the privacy rules and ask permission before posting any group photos.<br>" +
+                   "e. I understand. I’ll check the rules before I add anything.",
+                options: ["A. c – a – d – b – e", "B. a – c – b – d – e", "C. c – b – a – d – e", "D. c – a – b – d – e"],
+                correct: "D. c – a – b – d – e",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Thứ tự hội thoại chuẩn D (c – a – b – d – e):</strong><br>
+                   - (c) Hỏi cách tạo tài khoản diễn đàn.<br>
+                   - (a) Hướng dẫn nhập email và mật khẩu.<br>
+                   - (b) Hỏi có nên tải ảnh đại diện lên ngay không.<br>
+                   - (d) Nhắc chưa nên, hãy đọc quy tắc bảo mật trước.<br>
+                   - (e) Hiểu ý và hứa kiểm tra quy tắc.`
+            },
+            {
+                q: "4. Arrange the five sentences to make a complete dialogue:<br>" +
+                   "a. I have three projects to finish, and I cannot concentrate because my phone keeps displaying messages.<br>" +
+                   "b. You look exhausted today. Is something causing you a lot of pressure?<br>" +
+                   "c. That is a sensible idea. I’ll also turn off unnecessary notifications while I study.<br>" +
+                   "d. Why don’t you list the tasks, divide them into smaller steps, and speak to the counsellor?<br>" +
+                   "e. Yes. I have been staying up late, but the extra hours have not helped.",
+                options: ["A. b – a – d – e – c", "B. b – a – e – d – c", "C. e – b – a – d – c", "D. b – e – d – a – c"],
+                correct: "B. b – a – e – d – c",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Thứ tự hội thoại chuẩn B (b – a – e – d – c):</strong><br>
+                   - (b) Hỏi về việc bạn trông mệt mỏi.<br>
+                   - (a) Nêu lý do 3 dự án & điện thoại liên tục hiện thông báo.<br>
+                   - (e) Nói thêm về việc thức khuya mà không hiệu quả.<br>
+                   - (d) Lời khuyên chia nhỏ nhiệm vụ & gặp tư vấn viên.<br>
+                   - (c) Đồng ý đó là ý hay và sẽ tắt thông báo.`
+            },
+            {
+                q: "5. Arrange the five sentences to make a complete dialogue:<br>" +
+                   "a. I prefer the arts and crafts club because making things helps me relax after lessons.<br>" +
+                   "b. Which school club are you thinking of joining this term?<br>" +
+                   "c. The chess club is interesting too, but its meeting time conflicts with my music lesson.<br>" +
+                   "d. That makes sense. Do you know when the arts and crafts club meets?<br>" +
+                   "e. It meets on Thursday afternoon, so I can attend regularly.",
+                options: ["A. a – b – c – d – e", "B. b – c – a – d – e", "C. b – a – c – d – e", "D. b – a – d – c – e"],
+                correct: "C. b – a – c – d – e",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Thứ tự hội thoại chuẩn C (b – a – c – d – e):</strong><br>
+                   - (b) Hỏi sắp tham gia CLB nào.<br>
+                   - (a) Trả lời thích CLB thủ công vì giúp thư giãn.<br>
+                   - (c) Nhắc tới CLB cờ vua nhưng vướng lịch học nhạc.<br>
+                   - (d) Hỏi lịch sinh hoạt của CLB thủ công.<br>
+                   - (e) Trả lời họp chiều thứ 5.`
+            },
+            {
+                q: "6. Arrange the five sentences to make a complete dialogue:<br>" +
+                   "a. Sorry, I cannot play today because I have to complete a science project.<br>" +
+                   "b. Do you fancy playing badminton after school? The weather is perfect.<br>" +
+                   "c. Saturday morning would be better because I will have finished the project by then.<br>" +
+                   "d. No problem. Would Saturday morning or Sunday afternoon suit you?<br>" +
+                   "e. Great. I’ll book a court at the sports centre.",
+                options: ["A. b – a – d – c – e", "B. b – d – a – c – e", "C. a – b – d – c – e", "D. b – a – c – d – e"],
+                correct: "A. b – a – d – c – e",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Thứ tự hội thoại chuẩn A (b – a – d – c – e):</strong><br>
+                   - (b) Rủ chơi cầu lông sau giờ học.<br>
+                   - (a) Từ chối vì bận dự án khoa học.<br>
+                   - (d) Đề xuất sáng thứ 7 hoặc chiều CN.<br>
+                   - (c) Chọn sáng thứ 7.<br>
+                   - (e) Đồng ý chốt đặt sân.`
+            },
+            {
+                q: "7. Arrange the five sentences to make a complete dialogue:<br>" +
+                   "a. In my opinion, the peaceful atmosphere was the best part of the visit.<br>" +
+                   "b. What did you think of your weekend in your grandparents’ village?<br>" +
+                   "c. I agree. The villagers were also more hospitable than I had expected.<br>" +
+                   "d. Did you take part in any farming activities while you were there?<br>" +
+                   "e. Yes. I helped feed the poultry and spread rice out to dry.",
+                options: ["A. a – b – c – d – e", "B. b – c – a – d – e", "C. b – a – d – c – e", "D. b – a – c – d – e"],
+                correct: "D. b – a – c – d – e",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Thứ tự hội thoại chuẩn D (b – a – c – d – e):</strong><br>
+                   - (b) Hỏi cảm nghĩ về chuyến thăm làng ông bà.<br>
+                   - (a) Nêu cảm tưởng không khí yên bình là tuyệt nhất.<br>
+                   - (c) Đồng ý và khen người dân hiếu khách.<br>
+                   - (d) Hỏi có tham gia hoạt động nông nghiệp nào không.<br>
+                   - (e) Trả lời có cho gia cầm ăn và phơi lúa.`
+            },
+            {
+                q: "8. Arrange the five sentences to make a complete dialogue:<br>" +
+                   "a. Not at all. I’ll put it on silent and place it in my bag.<br>" +
+                   "b. Would you mind turning off the sound on your phone? I need to concentrate on this article.<br>" +
+                   "c. Thank you. The library notice asks everyone to keep devices silent.<br>" +
+                   "d. I did not notice the sign when I came in.<br>" +
+                   "e. That’s all right. It is easy to miss because it is beside the entrance.",
+                options: ["A. a – b – c – d – e", "B. b – c – a – d – e", "C. b – a – d – c – e", "D. b – a – c – d – e"],
+                correct: "D. b – a – c – d – e",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Thứ tự hội thoại chuẩn D (b – a – c – d – e):</strong><br>
+                   - (b) Nhắc tắt chuông điện thoại để tập trung đọc bài.<br>
+                   - (a) Vui vẻ đồng ý tắt chuông cất vào cặp.<br>
+                   - (c) Cảm ơn và nhắc về biển báo thư viện.<br>
+                   - (d) Giải thích lúc vào không chú ý biển báo.<br>
+                   - (e) An ủi là biển báo dễ bị bỏ qua.`
+            },
+            {
+                q: "9. Arrange the five sentences to make a complete dialogue:<br>" +
+                   "a. We helped unload several bags of rice and then spread the grain in a dry yard.<br>" +
+                   "b. What activities did your class do during the farm visit?<br>" +
+                   "c. The guide must have explained the safety rules carefully.<br>" +
+                   "d. Yes. We had to wear boots and stay away from the combine harvester.<br>" +
+                   "e. It sounds like a useful experience as well as an enjoyable trip.",
+                options: ["A. b – c – a – d – e", "B. a – b – c – d – e", "C. b – a – c – d – e", "D. b – a – d – c – e"],
+                correct: "C. b – a – c – d – e",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Thứ tự hội thoại chuẩn C (b – a – c – d – e):</strong><br>
+                   - (b) Hỏi về hoạt động của lớp tại trang trại.<br>
+                   - (a) Kể việc dỡ bao lúa và phơi lúa.<br>
+                   - (c) Bàn về việc người hướng dẫn giải thích quy tắc an toàn.<br>
+                   - (d) Xác nhận phải đi ủng và tránh xa máy gặt.<br>
+                   - (e) Đánh giá đây là chuyến đi hữu ích và thú vị.`
+            },
+            {
+                q: "10. Arrange the five sentences to make a complete dialogue:<br>" +
+                   "a. I prefer cycling because it keeps me active and gives me a break from screens.<br>" +
+                   "b. How do you usually spend your free time after finishing your homework?<br>" +
+                   "c. I often cycle around the lake, although I sometimes stay home and do puzzles.<br>" +
+                   "d. Which of those activities do you enjoy more?<br>" +
+                   "e. That is a healthy choice, especially after a long day of online study.",
+                options: ["A. b – c – d – a – e", "B. b – d – c – a – e", "C. b – c – a – d – e", "D. c – b – d – a – e"],
+                correct: "A. b – c – d – a – e",
+                explanation: `<strong>PHẦN GIẢI THÍCH CHI TIẾT:</strong><br>
+                1. <strong>Thứ tự hội thoại chuẩn A (b – c – d – a – e):</strong><br>
+                   - (b) Hỏi thời gian rảnh làm gì sau bài tập.<br>
+                   - (c) Nói đạp xe quanh hồ hoặc giải đố.<br>
+                   - (d) Hỏi thích hoạt động nào hơn.<br>
+                   - (a) Trả lời thích đạp xe hơn vì xa màn hình.<br>
+                   - (e) Khen đó là lựa chọn lành mạnh.`
+            }
+        ];
+
+        // RENDER QUESTIONS & INTERACTION LOGIC
+        const quizContainer = document.getElementById('quiz-container');
+        let userAnswers = {};
+
+        // Utility: Fisher-Yates Array Shuffle Algorithm
+        function shuffleArray(array) {
+            const arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function renderQuiz() {
+            let currentSection = "";
+
+            quizData.forEach((item, index) => {
+                // Section Header
+                if (item.section && item.section !== currentSection) {
+                    currentSection = item.section;
+                    const sectionHeader = document.createElement('div');
+                    sectionHeader.className = "bg-brandPurple text-white text-lg sm:text-xl font-extrabold px-6 py-3 rounded-2xl shadow-md mt-8 mb-4 tracking-wide uppercase border-b-4 border-purple-900";
+                    sectionHeader.innerHTML = `📌 ${currentSection}`;
+                    quizContainer.appendChild(sectionHeader);
+                }
+
+                // Passage Box if exists
+                if (item.passage) {
+                    const passageBox = document.createElement('div');
+                    passageBox.className = "bg-purple-50/90 border-2 border-purple-200 rounded-2xl p-4 sm:p-6 mb-4 text-sm sm:text-base leading-relaxed text-slate-700 shadow-sm";
+                    passageBox.innerHTML = item.passage;
+                    quizContainer.appendChild(passageBox);
+                }
+
+                // Question Card
+                const card = document.createElement('div');
+                card.className = "card-3d rounded-2xl p-5 sm:p-6 transition-all duration-300";
+                card.id = `q-card-${index}`;
+
+                // Shuffle Options for Gamification
+                const shuffledOptions = shuffleArray(item.options);
+
+                let optionsHTML = shuffledOptions.map(opt => `
+                    <button type="button" 
+                            onclick="selectAnswer(${index}, '${opt.replace(/'/g, "\\'")}', this)"
+                            class="btn-option w-full text-left p-3 sm:p-4 rounded-xl text-sm sm:text-base font-bold bg-white text-slate-700 flex items-start gap-3">
+                        <span class="w-6 h-6 rounded-full bg-slate-100 border border-slate-300 text-xs flex items-center justify-center shrink-0 mt-0.5 text-slate-500 font-black">?</span>
+                        <span class="flex-1">${opt}</span>
+                    </button>
+                `).join('');
+
+                card.innerHTML = `
+                    <div class="font-black text-slate-800 text-base sm:text-lg mb-4 flex items-start gap-2">
+                        <span class="bg-brandYellow text-slate-900 text-xs px-2.5 py-1 rounded-lg shrink-0 mt-0.5 border border-amber-300">Câu ${index + 1}</span>
+                        <span>${item.q}</span>
+                    </div>
+
+                    <div class="space-y-3 mb-4" id="options-group-${index}">
+                        ${optionsHTML}
+                    </div>
+
+                    <!-- EXPLANATION BOX (Hidden until clicked) -->
+                    <div id="explanation-${index}" class="explanation-box hidden mt-4 bg-emerald-50 border-2 border-emerald-300 rounded-xl p-4 text-xs sm:text-sm text-slate-800 shadow-inner leading-relaxed">
+                        ${item.explanation}
+                    </div>
+                `;
+
+                quizContainer.appendChild(card);
+            });
+        }
+
+        // HANDLE ANSWER SELECTION
+        function selectAnswer(qIndex, selectedOpt, btnElement) {
+            const item = quizData[qIndex];
+            const optionsGroup = document.getElementById(`options-group-${qIndex}`);
+            const buttons = optionsGroup.querySelectorAll('.btn-option');
+            const expBox = document.getElementById(`explanation-${qIndex}`);
+
+            // Save user choice
+            userAnswers[qIndex] = selectedOpt;
+
+            const isCorrect = (selectedOpt === item.correct);
+
+            // Reset buttons in group
+            buttons.forEach(btn => {
+                btn.disabled = true; // Lock answer after selection
+                btn.classList.remove('selected-correct', 'selected-wrong', 'reveal-correct');
+            });
+
+            if (isCorrect) {
+                btnElement.classList.add('selected-correct');
+                playDingSound();
+                
+                // Trigger Confetti
+                if (typeof confetti === 'function') {
+                    confetti({
+                        particleCount: 40,
+                        spread: 60,
+                        origin: { y: 0.7 }
+                    });
+                }
+            } else {
+                btnElement.classList.add('selected-wrong');
+                playWrongSound();
+
+                // Highlight correct answer
+                buttons.forEach(btn => {
+                    if (btn.innerText.includes(item.correct)) {
+                        btn.classList.add('reveal-correct');
+                    }
+                });
+            }
+
+            // Unhide Explanation Box
+            if (expBox) {
+                expBox.classList.remove('hidden');
+            }
+        }
+
+        // SUBMIT EXAM & SHOW MODAL SCORE
+        function submitExam() {
+            let score = 0;
+            const total = quizData.length;
+
+            quizData.forEach((item, index) => {
+                if (userAnswers[index] === item.correct) {
+                    score++;
+                }
+            });
+
+            const percent = Math.round((score / total) * 100);
+            
+            const modal = document.getElementById('score-modal');
+            const modalScore = document.getElementById('modal-score');
+            const modalFeedback = document.getElementById('modal-feedback');
+            const modalIcon = document.getElementById('modal-icon');
+
+            modalScore.innerHTML = `${score} / ${total} (${percent}%)`;
+
+            let feedbackText = "";
+            if (percent < 50) {
+                modalIcon.innerText = "💪";
+                feedbackText = "Điểm lần này chưa cao lắm, con cố gắng đọc kỹ giải thích đáp án và làm lại nha. Cô tin con sẽ làm tốt hơn ở lần sau!";
+            } else if (percent <= 80) {
+                modalIcon.innerText = "🌟";
+                feedbackText = "Con đã có tiến bộ khá ổn rồi, con cố gắng đọc kỹ giải thích đáp án và làm lại nha. Cô tin con sẽ làm tốt hơn ở lần sau!";
+            } else {
+                modalIcon.innerText = "🏆";
+                feedbackText = "Làm tốt lắm, con cố gắng ring điểm 10 ở lần sau nha!";
+            }
+
+            modalFeedback.innerText = feedbackText;
+            modal.classList.remove('hidden');
+
+            if (percent >= 80 && typeof confetti === 'function') {
+                confetti({
+                    particleCount: 150,
+                    spread: 100,
+                    origin: { y: 0.5 }
+                });
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('score-modal').classList.add('hidden');
+        }
+
+        // Initialize quiz on load
+        window.onload = function() {
+            renderQuiz();
+        };
+    </script>
+</body>
+</html>
